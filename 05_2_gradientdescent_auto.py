@@ -31,7 +31,7 @@ def loss(y, y_pred):
 print(f'Prediction before training: f(5) = {forward(5).item():.3f}')
 
 # Training
-learning_rate = 0.01
+learning_rate = 0.2
 n_iters = 100
 
 for epoch in range(n_iters):
@@ -39,8 +39,8 @@ for epoch in range(n_iters):
     y_pred = forward(X)
 
     # loss
-    # l = loss(Y, y_pred)
-    l = cross_entropy(Y, y_pred)
+    l = loss(Y, y_pred)
+    # l = cross_entropy(Y, y_pred)
 
     # calculate gradients = backward pass
     l.backward()
