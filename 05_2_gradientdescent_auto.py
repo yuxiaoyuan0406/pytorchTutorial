@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 # Here we replace the manually computed gradient with autograd
 
@@ -15,6 +16,14 @@ w = torch.tensor(0.0, dtype=torch.float32, requires_grad=True)
 def forward(x):
     return w * x
 
+def cross_entropy(Y, P):
+    """Cross-Entropy loss function.
+    以向量化的方式实现交叉熵函数
+    Y and P are lists of labels and estimations
+    returns the float corresponding to their cross-entropy.
+    """
+    return (Y * torch.log(P) + (1 - Y) * torch.log(1 - P)).mean()
+
 # loss = MSE
 def loss(y, y_pred):
     return ((y_pred - y)**2).mean()
@@ -30,7 +39,8 @@ for epoch in range(n_iters):
     y_pred = forward(X)
 
     # loss
-    l = loss(Y, y_pred)
+    # l = loss(Y, y_pred)
+    l = cross_entropy(Y, y_pred)
 
     # calculate gradients = backward pass
     l.backward()
